@@ -124,6 +124,10 @@ module Capistrano
       end
     end
 
+    def configure_scm
+      Capistrano::Configuration::SCMResolver.new.resolve
+    end
+
     def timestamp
       @timestamp ||= Time.now.utc
     end
@@ -152,8 +156,10 @@ module Capistrano
       fetch(:sshkit_backend) == SSHKit::Backend::Printer
     end
 
-    def install_plugin(plugin, load_hooks:true)
-      installer.install(plugin, load_hooks: load_hooks)
+    def install_plugin(plugin, load_hooks:true, load_immediately: false)
+      installer.install(plugin,
+                        load_hooks: load_hooks,
+                        load_immediately: load_immediately)
     end
 
     private
