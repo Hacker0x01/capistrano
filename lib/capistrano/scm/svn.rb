@@ -16,6 +16,7 @@ class Capistrano::SCM::Svn < Capistrano::Plugin
     args.unshift(:svn)
     args.push "--username #{fetch(:svn_username)}" if fetch(:svn_username)
     args.push "--password #{fetch(:svn_password)}" if fetch(:svn_password)
+    args.push "--revision #{fetch(:svn_revision)}" if fetch(:svn_revision)
     backend.execute(*args)
   end
 

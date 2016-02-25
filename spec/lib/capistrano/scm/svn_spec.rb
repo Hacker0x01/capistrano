@@ -77,6 +77,17 @@ module Capistrano
 
         subject.update_mirror
       end
+
+      context "for specific revision" do
+        it "should run svn update" do
+          env.set(:svn_username, 'someuser')
+          env.set(:svn_password, 'somepassword')
+          env.set(:svn_revision, '12345')
+          backend.expects(:execute).with(:svn, :update, '--username someuser', '--password somepassword', '--revision 12345')
+
+          subject.update_mirror
+        end
+      end
     end
 
     describe "#archive_to_release_path" do

@@ -43,7 +43,7 @@ class Capistrano::SCM::Git < Capistrano::Plugin
     if (depth = fetch(:git_shallow_clone))
       git :fetch, '--depth', depth, 'origin', fetch(:branch)
     else
-      git :remote, :update
+      git :remote, :update, '--prune'
     end
   end
 
@@ -58,7 +58,7 @@ class Capistrano::SCM::Git < Capistrano::Plugin
   end
 
   def fetch_revision
-    backend.capture(:git, "rev-list --max-count=1 --abbrev-commit --abbrev=12 #{fetch(:branch)}")
+    backend.capture(:git, "rev-list --max-count=1 #{fetch(:branch)}")
   end
 
   def git(*args)
