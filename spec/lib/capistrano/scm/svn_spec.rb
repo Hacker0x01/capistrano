@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-require 'capistrano/scm/svn'
+require "capistrano/scm/svn"
 
 module Capistrano
   describe SCM::Svn do
@@ -29,9 +29,9 @@ module Capistrano
 
     describe "#svn" do
       it "should call execute svn in the context, with arguments" do
-        env.set(:svn_username, 'someuser')
-        env.set(:svn_password, 'somepassword')
-        backend.expects(:execute).with(:svn, :init, '--username someuser', '--password somepassword')
+        env.set(:svn_username, "someuser")
+        env.set(:svn_password, "somepassword")
+        backend.expects(:execute).with(:svn, :init, "--username someuser", "--password somepassword")
         subject.svn(:init)
       end
     end
@@ -48,9 +48,9 @@ module Capistrano
     describe "#check_repo_is_reachable" do
       it "should test the repo url" do
         env.set(:repo_url, :url)
-        env.set(:svn_username, 'someuser')
-        env.set(:svn_password, 'somepassword')
-        backend.expects(:test).with(:svn, :info, :url, '--username someuser', '--password somepassword').returns(true)
+        env.set(:svn_username, "someuser")
+        env.set(:svn_password, "somepassword")
+        backend.expects(:test).with(:svn, :info, :url, "--username someuser", "--password somepassword").returns(true)
 
         subject.check_repo_is_reachable
       end
@@ -60,10 +60,10 @@ module Capistrano
       it "should run svn checkout" do
         env.set(:repo_url, :url)
         env.set(:repo_path, "path")
-        env.set(:svn_username, 'someuser')
-        env.set(:svn_password, 'somepassword')
+        env.set(:svn_username, "someuser")
+        env.set(:svn_password, "somepassword")
 
-        backend.expects(:execute).with(:svn, :checkout, :url, "path", '--username someuser', '--password somepassword')
+        backend.expects(:execute).with(:svn, :checkout, :url, "path", "--username someuser", "--password somepassword")
 
         subject.clone_repo
       end
@@ -71,19 +71,19 @@ module Capistrano
 
     describe "#update_mirror" do
       it "should run svn update" do
-        env.set(:svn_username, 'someuser')
-        env.set(:svn_password, 'somepassword')
-        backend.expects(:execute).with(:svn, :update, '--username someuser', '--password somepassword')
+        env.set(:svn_username, "someuser")
+        env.set(:svn_password, "somepassword")
+        backend.expects(:execute).with(:svn, :update, "--username someuser", "--password somepassword")
 
         subject.update_mirror
       end
 
       context "for specific revision" do
         it "should run svn update" do
-          env.set(:svn_username, 'someuser')
-          env.set(:svn_password, 'somepassword')
-          env.set(:svn_revision, '12345')
-          backend.expects(:execute).with(:svn, :update, '--username someuser', '--password somepassword', '--revision 12345')
+          env.set(:svn_username, "someuser")
+          env.set(:svn_password, "somepassword")
+          env.set(:svn_revision, "12345")
+          backend.expects(:execute).with(:svn, :update, "--username someuser", "--password somepassword", "--revision 12345")
 
           subject.update_mirror
         end
@@ -93,10 +93,10 @@ module Capistrano
     describe "#archive_to_release_path" do
       it "should run svn export" do
         env.set(:release_path, "path")
-        env.set(:svn_username, 'someuser')
-        env.set(:svn_password, 'somepassword')
+        env.set(:svn_username, "someuser")
+        env.set(:svn_password, "somepassword")
 
-        backend.expects(:execute).with(:svn, :export, '--force', '.', "path", '--username someuser', '--password somepassword')
+        backend.expects(:execute).with(:svn, :export, "--force", ".", "path", "--username someuser", "--password somepassword")
 
         subject.archive_to_release_path
       end

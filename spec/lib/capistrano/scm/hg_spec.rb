@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-require 'capistrano/scm/hg'
+require "capistrano/scm/hg"
 
 module Capistrano
   describe SCM::Hg do
@@ -57,7 +57,7 @@ module Capistrano
         env.set(:repo_url, :url)
         env.set(:repo_path, "path")
 
-        backend.expects(:execute).with(:hg, "clone", '--noupdate', :url, "path")
+        backend.expects(:execute).with(:hg, "clone", "--noupdate", :url, "path")
 
         subject.clone_repo
       end
@@ -82,11 +82,11 @@ module Capistrano
       end
 
       it "should run hg archive with a subtree" do
-        env.set(:repo_tree, 'tree')
+        env.set(:repo_tree, "tree")
         env.set(:branch, :branch)
         env.set(:release_path, "path")
 
-        backend.expects(:execute).with(:hg, "archive --type tgz -p . -I", 'tree', "--rev", :branch, '| tar -x --strip-components 1 -f - -C', "path")
+        backend.expects(:execute).with(:hg, "archive --type tgz -p . -I", "tree", "--rev", :branch, "| tar -x --strip-components 1 -f - -C", "path")
 
         subject.archive_to_release_path
       end

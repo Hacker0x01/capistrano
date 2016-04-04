@@ -25,8 +25,8 @@ class Capistrano::SCM::Svn < Capistrano::Plugin
   end
 
   def check_repo_is_reachable
-    svn_username = fetch(:svn_username) ? "--username #{fetch(:svn_username)}" : ''
-    svn_password = fetch(:svn_password) ? "--password #{fetch(:svn_password)}" : ''
+    svn_username = fetch(:svn_username) ? "--username #{fetch(:svn_username)}" : ""
+    svn_password = fetch(:svn_password) ? "--password #{fetch(:svn_password)}" : ""
     backend.test :svn, :info, repo_url, svn_username, svn_password
   end
 
@@ -39,7 +39,7 @@ class Capistrano::SCM::Svn < Capistrano::Plugin
   end
 
   def archive_to_release_path
-    svn :export, '--force', '.', release_path
+    svn :export, "--force", ".", release_path
   end
 
   def fetch_revision

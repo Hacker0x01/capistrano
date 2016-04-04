@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-require 'capistrano/scm/git'
+require "capistrano/scm/git"
 
 module Capistrano
   describe SCM::Git do
@@ -56,17 +56,17 @@ module Capistrano
       it "should run git clone" do
         env.set(:repo_url, "url")
         env.set(:repo_path, "path")
-        backend.expects(:execute).with(:git, :clone, '--mirror', "url", "path")
+        backend.expects(:execute).with(:git, :clone, "--mirror", "url", "path")
 
         subject.clone_repo
       end
 
       it "should run git clone in shallow mode" do
-        env.set(:git_shallow_clone, '1')
+        env.set(:git_shallow_clone, "1")
         env.set(:repo_url, "url")
         env.set(:repo_path, "path")
 
-        backend.expects(:execute).with(:git, :clone, '--mirror', "--depth", '1', '--no-single-branch', "url", "path")
+        backend.expects(:execute).with(:git, :clone, "--mirror", "--depth", "1", "--no-single-branch", "url", "path")
 
         subject.clone_repo
       end
@@ -74,15 +74,15 @@ module Capistrano
 
     describe "#update_mirror" do
       it "should run git update" do
-        backend.expects(:execute).with(:git, :remote, :update, '--prune')
+        backend.expects(:execute).with(:git, :remote, :update, "--prune")
 
         subject.update_mirror
       end
 
       it "should run git update in shallow mode" do
-        env.set(:git_shallow_clone, '1')
-        env.set(:branch, 'branch')
-        backend.expects(:execute).with(:git, :fetch, "--depth", '1', "origin",  "branch")
+        env.set(:git_shallow_clone, "1")
+        env.set(:branch, "branch")
+        backend.expects(:execute).with(:git, :fetch, "--depth", "1", "origin", "branch")
 
         subject.update_mirror
       end
@@ -90,20 +90,20 @@ module Capistrano
 
     describe "#archive_to_release_path" do
       it "should run git archive without a subtree" do
-        env.set(:branch, 'branch')
-        env.set(:release_path, 'path')
+        env.set(:branch, "branch")
+        env.set(:release_path, "path")
 
-        backend.expects(:execute).with(:git, :archive, 'branch', '| tar -x -f - -C', 'path')
+        backend.expects(:execute).with(:git, :archive, "branch", "| tar -x -f - -C", "path")
 
         subject.archive_to_release_path
       end
 
       it "should run git archive with a subtree" do
-        env.set(:repo_tree, 'tree')
-        env.set(:branch, 'branch')
-        env.set(:release_path, 'path')
+        env.set(:repo_tree, "tree")
+        env.set(:branch, "branch")
+        env.set(:release_path, "path")
 
-        backend.expects(:execute).with(:git, :archive, 'branch', 'tree', '| tar -x --strip-components 1 -f - -C', 'path')
+        backend.expects(:execute).with(:git, :archive, "branch", "tree", "| tar -x --strip-components 1 -f - -C", "path")
 
         subject.archive_to_release_path
       end

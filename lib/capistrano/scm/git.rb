@@ -6,8 +6,8 @@ class Capistrano::SCM::Git < Capistrano::Plugin
     set_if_empty :git_shallow_clone, false
     set_if_empty :git_environmental_variables, lambda {
       {
-        :git_askpass => "/bin/echo",
-        :git_ssh => "#{fetch(:tmp_dir)}/#{fetch(:application)}/git-ssh.sh"
+        git_askpass: "/bin/echo",
+        git_ssh: "#{fetch(:tmp_dir)}/#{fetch(:application)}/git-ssh.sh"
       }
     }
   end
@@ -32,28 +32,28 @@ class Capistrano::SCM::Git < Capistrano::Plugin
 
   def clone_repo
     if (depth = fetch(:git_shallow_clone))
-      git :clone, '--mirror', '--depth', depth, '--no-single-branch', repo_url, repo_path.to_s
+      git :clone, "--mirror", "--depth", depth, "--no-single-branch", repo_url, repo_path.to_s
     else
-      git :clone, '--mirror', repo_url, repo_path.to_s
+      git :clone, "--mirror", repo_url, repo_path.to_s
     end
   end
 
   def update_mirror
     # Note: Requires git version 1.9 or greater
     if (depth = fetch(:git_shallow_clone))
-      git :fetch, '--depth', depth, 'origin', fetch(:branch)
+      git :fetch, "--depth", depth, "origin", fetch(:branch)
     else
-      git :remote, :update, '--prune'
+      git :remote, :update, "--prune"
     end
   end
 
   def archive_to_release_path
     if (tree = fetch(:repo_tree))
       tree = tree.slice %r#^/?(.*?)/?$#, 1
-      components = tree.split('/').size
+      components = tree.split("/").size
       git :archive, fetch(:branch), tree, "| tar -x --strip-components #{components} -f - -C", release_path
     else
-      git :archive, fetch(:branch), '| tar -x -f - -C', release_path
+      git :archive, fetch(:branch), "| tar -x -f - -C", release_path
     end
   end
 

@@ -6,13 +6,13 @@ require "capistrano/deploy"
 
 # Load the SCM appropriate to your project:
 #
-# require 'capistrano/scm/hg'
+# require "capistrano/scm/hg"
 # Capistrano::SCM::Hg.new
 # or
-# require 'capistrano/scm/svn'
+# require "capistrano/scm/svn"
 # Capistrano::SCM::Svn.new
 # or
-require 'capistrano/scm/git'
+require "capistrano/scm/git"
 Capistrano::SCM::Git.new
 
 # Include tasks from other gems included in your Gemfile

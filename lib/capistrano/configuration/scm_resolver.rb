@@ -31,7 +31,6 @@ module Capistrano
         print_deprecation_warnings_if_applicable
         return if scm_plugin_loaded?
 
-
         if built_in_scm_name?
           load_built_in_scm
         else
